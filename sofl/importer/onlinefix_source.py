@@ -24,8 +24,7 @@ from pathlib import Path
 from time import time
 
 from sofl import shared
-from sofl.game import Game
-from sofl.onlinefix_game import OnlineFixGameData
+from sofl.game_factory import GameFactory
 from sofl.importer.source import Source, SourceIterable
 
 class OnlineFixSourceIterable(SourceIterable):
@@ -69,10 +68,7 @@ class OnlineFixSourceIterable(SourceIterable):
                 "removed": False
             }
             
-            data = OnlineFixGameData(raw_data)
-            
-            game = Game(data)
-            yield game
+            yield GameFactory.create_game(raw_data)
 
     def _find_executable(self, folder: Path) -> Path | None:
         """
